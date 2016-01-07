@@ -33,15 +33,15 @@ class LoginViewController: UIViewController {
                     self.registerForPush()
                     self.performSegueWithIdentifier("loginToItemSegue", sender: nil)
                 } else {
-                    let errorString = error.userInfo!["error"] as! NSString
-                    println("Error Signing up: \(error)")
+                    let errorString = error.userInfo["error"] as! NSString
+                    print("Error Signing up: \(error)")
                     PFUser.logInWithUsernameInBackground(user.username, password: user.password, block: { (user, error) -> Void in
                         if error == nil {
                             
                             self.registerForPush()
                             self.performSegueWithIdentifier("loginToItemSegue", sender: nil)
                         }else{
-                            println("Error logging in ")
+                            print("Error logging in ")
                             self.viewShaker?.shake()
                         }
                     })
@@ -65,11 +65,11 @@ class LoginViewController: UIViewController {
         let application = UIApplication.sharedApplication()
         
         if application.respondsToSelector("registerUserNotificationSettings:") {
-            let settings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert | UIUserNotificationType.Sound | UIUserNotificationType.Badge, categories: nil)
+            let settings = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Alert, UIUserNotificationType.Sound, UIUserNotificationType.Badge], categories: nil)
             application.registerUserNotificationSettings(settings)
             application.registerForRemoteNotifications()
         }else{
-            let types: UIRemoteNotificationType = .Badge | .Alert | .Sound
+            let types: UIRemoteNotificationType = [.Badge, .Alert, .Sound]
             application.registerForRemoteNotificationTypes(types)
         }
         

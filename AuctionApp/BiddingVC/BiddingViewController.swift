@@ -152,7 +152,7 @@ class BiddingViewController: UIViewController {
         
         switch state {
         case .Custom:
-            if let amount = customBidTextField.text.toInt(){
+            if let amount = Int(customBidTextField.text){
                 didSelectAmount(.Custom(amount))
             }else{
                 didTapBackground("")
